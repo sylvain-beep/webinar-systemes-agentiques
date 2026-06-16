@@ -66,7 +66,12 @@
   .hero-list li{display:flex;align-items:flex-start;gap:12px;font-size:15px;color:rgba(255,255,255,.88);line-height:1.45}
   .hero-list .ck{flex-shrink:0;width:22px;height:22px;border-radius:99px;background:rgba(72,208,255,.14);display:flex;align-items:center;justify-content:center;color:var(--sec-400);margin-top:1px}
 
-  .trust-row{display:flex;align-items:center;gap:24px;margin-top:36px;padding-top:26px;border-top:1px solid rgba(255,255,255,.08);flex-wrap:wrap}
+  .intern-card{margin-top:36px;padding:22px 24px;border-radius:var(--r-lg);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+  .intern-tag{display:inline-flex;align-items:center;gap:9px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--sec-400)}
+  .intern-tag .dot{width:7px;height:7px;border-radius:99px;background:var(--sec-400);box-shadow:0 0 0 4px rgba(72,208,255,.18)}
+  .intern-lede{font-size:15.5px;line-height:1.5;color:rgba(255,255,255,.85);margin:10px 0 0}
+  .intern-lede b{color:#fff;font-weight:700}
+  .trust-row{display:flex;align-items:center;gap:24px;margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,.1);flex-wrap:wrap}
   .trust-item .n{font-family:var(--font-mono);font-size:24px;font-weight:500;color:#fff;line-height:1;letter-spacing:-.02em}
   .trust-item .l{font-size:12px;color:rgba(255,255,255,.55);margin-top:6px;letter-spacing:.02em;max-width:150px}
   .trust-sep{width:1px;height:42px;background:rgba(255,255,255,.12)}
@@ -114,9 +119,10 @@
   .clients-inner{display:flex;align-items:center;gap:32px}
   .clients .lbl{flex-shrink:0;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-3)}
   .marquee{position:relative;overflow:hidden;flex:1;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-  .marquee-track{display:flex;gap:40px;width:max-content;animation:marq 38s linear infinite}
+  .marquee-track{display:flex;align-items:center;gap:56px;width:max-content;animation:marq 38s linear infinite}
   @keyframes marq{to{transform:translateX(-50%)}}
-  .client-name{font-family:var(--font-display);font-weight:700;font-size:17px;color:var(--grey-400);white-space:nowrap;letter-spacing:-.01em}
+  .client-logo{height:30px;width:auto;flex-shrink:0;object-fit:contain;filter:grayscale(1);opacity:.55;transition:filter var(--dur) var(--ease),opacity var(--dur) var(--ease)}
+  .client-logo:hover{filter:grayscale(0);opacity:1}
   @media(max-width:720px){.clients-inner{flex-direction:column;align-items:flex-start;gap:14px}}
 
   /* ---------- 3 temps ---------- */
@@ -152,6 +158,7 @@
   .result-metrics{display:flex;gap:22px;flex-wrap:wrap}
   .result-metrics .m .n{font-family:var(--font-mono);font-size:26px;font-weight:500;letter-spacing:-.02em;color:var(--fg-1);line-height:1}
   .result-metrics .m .ml{font-size:12px;color:var(--fg-3);margin-top:5px;max-width:110px;line-height:1.35}
+  .results-more{text-align:center;font-size:16px;color:var(--fg-2);margin:36px auto 0;max-width:560px}
 
   /* ---------- audience ---------- */
   .aud{background:var(--bg-soft)}
@@ -219,15 +226,19 @@
         <ul class="hero-list">
           <li><span class="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></span>Pourquoi l'automatisation classique atteint ses limites, et ce que change un agent.</li>
           <li><span class="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></span>Une feuille de route en 5 étapes pour repérer votre premier agent rentable.</li>
-          <li><span class="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></span>Les sources de ROI, avec des résultats réels (jusqu'à 700 k CHF économisés/an).</li>
+          <li><span class="ck"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></span>Les sources de ROI, avec des résultats réels.</li>
         </ul>
 
-        <div class="trust-row">
-          <div class="trust-item"><div class="n">500+</div><div class="l">factures/mois gérées par notre agent Balin</div></div>
-          <div class="trust-sep"></div>
-          <div class="trust-item"><div class="n">×2</div><div class="l">de volume absorbé sans recrutement</div></div>
-          <div class="trust-sep"></div>
-          <div class="trust-item"><div class="n">&gt;95%</div><div class="l">des actions de l'agent validées en l'état</div></div>
+        <div class="intern-card">
+          <span class="intern-tag"><span class="dot"></span>Pour notre usage interne</span>
+          <p class="intern-lede">Nous avons développé <b>Balin</b>, un agent qui gère notre facturation.</p>
+          <div class="trust-row">
+            <div class="trust-item"><div class="n">500+</div><div class="l">factures/mois gérées par notre agent Balin</div></div>
+            <div class="trust-sep"></div>
+            <div class="trust-item"><div class="n">×2</div><div class="l">de volume absorbé sans recrutement</div></div>
+            <div class="trust-sep"></div>
+            <div class="trust-item"><div class="n">&gt;95%</div><div class="l">des actions de l'agent validées en l'état</div></div>
+          </div>
         </div>
       </div>
 
@@ -275,18 +286,18 @@
     <span class="lbl">Ils nous font confiance</span>
     <div class="marquee" aria-hidden="true">
       <div class="marquee-track" data-marquee>
-        <span class="client-name">BNP Paribas</span>
-        <span class="client-name">Chanel</span>
-        <span class="client-name">Hermès</span>
-        <span class="client-name">Carrefour</span>
-        <span class="client-name">Decathlon</span>
-        <span class="client-name">Iliad</span>
-        <span class="client-name">Bpifrance</span>
-        <span class="client-name">Bandai Namco</span>
-        <span class="client-name">La Réserve Genève</span>
-        <span class="client-name">Showroomprivé</span>
-        <span class="client-name">Groupe Guillin</span>
-        <span class="client-name">Groupe Odealim</span>
+        <img class="client-logo" src="assets/logos/hermes.svg" alt="Hermès" loading="lazy">
+        <img class="client-logo" src="assets/logos/meta.svg" alt="Meta" loading="lazy">
+        <img class="client-logo" src="assets/logos/bpi.svg" alt="Bpifrance" loading="lazy">
+        <img class="client-logo" src="assets/logos/bandai-namco.svg" alt="Bandai Namco" loading="lazy">
+        <img class="client-logo" src="assets/logos/showroomprive.svg" alt="Showroomprivé" loading="lazy">
+        <img class="client-logo" src="assets/logos/la-reserve.svg" alt="La Réserve" loading="lazy">
+        <img class="client-logo" src="assets/logos/clarins.svg" alt="Clarins" loading="lazy">
+        <img class="client-logo" src="assets/logos/keolis.svg" alt="Keolis" loading="lazy">
+        <img class="client-logo" src="assets/logos/toyota.svg" alt="Toyota" loading="lazy">
+        <img class="client-logo" src="assets/logos/leroy-merlin.svg" alt="Leroy Merlin" loading="lazy">
+        <img class="client-logo" src="assets/logos/suez.svg" alt="Suez" loading="lazy">
+        <img class="client-logo" src="assets/logos/conforama.svg" alt="Conforama" loading="lazy">
       </div>
     </div>
   </div>
@@ -363,7 +374,7 @@
     <div data-reveal>
       <span class="sec-eyebrow"><span class="bar"></span>Le retour sur investissement</span>
       <h2 class="sec-title">Ce que ça rapporte, <span class="hl">concrètement.</span></h2>
-      <p class="sec-lede">Trois résultats obtenus chez nos clients, détaillés dans le guide. ~28% de nos projets signés entre 2024 et 2026 embarquent déjà une brique d'IA.</p>
+      <p class="sec-lede">Trois résultats obtenus chez nos clients.</p>
     </div>
 
     <div class="results-grid" data-reveal-group>
@@ -395,6 +406,8 @@
         </div>
       </div>
     </div>
+
+    <p class="results-more" data-reveal>Et bien d'autres exemples concrets d'implémentation, dans tous les secteurs.</p>
   </div>
 </section>
 
@@ -488,7 +501,7 @@
     </div>
     <div class="footer-right">
       Genève · Paris · Nantes · Lyon<br>
-      <a href="mailto:contact@galadrim.ch">contact@galadrim.ch</a> · <a href="https://galadrim.ch">galadrim.ch</a>
+      <a href="mailto:sylvain@galadrim.ch">sylvain@galadrim.ch</a> · <a href="https://galadrim.ch">galadrim.ch</a>
     </div>
   </div>
 </footer>
@@ -544,7 +557,7 @@
             <h4>Merci ${name}, votre livre blanc est prêt</h4>
             <p>Le document s'ouvre automatiquement. Si l'ouverture ne se lance pas, utilisez le bouton ci-dessous.</p>
             <a class="dl" href="${PDF_URL}" download>${dl} Télécharger le PDF</a>
-            <div class="next">Pour aller plus loin, nous vous proposons un diagnostic Data et IA de 30 minutes, sans engagement. Écrivez-nous à <a href="mailto:contact@galadrim.ch" style="color:var(--gala-bleu)">contact@galadrim.ch</a></div>
+            <div class="next">Pour aller plus loin, nous vous proposons un diagnostic Data et IA de 30 minutes, sans engagement. Écrivez-nous à <a href="mailto:sylvain@galadrim.ch" style="color:var(--gala-bleu)">sylvain@galadrim.ch</a></div>
           </div>`;
         // auto-open the PDF
         window.open(PDF_URL, '_blank', 'noopener');
