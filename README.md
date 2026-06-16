@@ -26,8 +26,17 @@ Puis ouvrir http://127.0.0.1:8765/
 
 Settings → Pages → Source : `Deploy from a branch`, branche `main`, dossier `/ (root)`.
 
-## À brancher
+## Formulaire → envoi du PDF par email
 
-Le formulaire est aujourd'hui **simulé** : il ouvre le PDF mais ne capture aucun
-email (voir le commentaire `NOTE:` dans le `<script>` de `index.html`). Pour la
-campagne, brancher un service de capture de leads (HubSpot, Formspree, etc.).
+À la soumission, le formulaire envoie les coordonnées à un script **Google Apps
+Script** (hébergé sur le compte `sylvain@galadrim.ch`) qui :
+
+1. envoie le livre blanc **par email**, en pièce jointe, depuis le Gmail de Sylvain ;
+2. enregistre le lead dans un **Google Sheet** ;
+3. notifie Sylvain du nouveau lead.
+
+Le PDF n'est plus proposé en téléchargement direct sur la page.
+
+Mise en place et déploiement du script : voir [`apps-script/README.md`](apps-script/README.md).
+Une fois le script déployé, coller son URL `/exec` dans la constante `ENDPOINT`
+du `<script>` de `index.html`.

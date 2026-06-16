@@ -5,15 +5,33 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Livre blanc · Systèmes agentiques : du diagnostic au ROI · Galadrim</title>
 <meta name="description" content="Le guide pour comprendre, identifier et rentabiliser votre premier agent IA. Cas réels chiffrés, feuille de route en 5 étapes, méthode éprouvée. Gratuit, pensé pour les dirigeants de PME et ETI de Suisse romande.">
+<meta name="author" content="Galadrim">
+<meta name="theme-color" content="#010C1E">
+<link rel="canonical" href="https://sylvain-beep.github.io/webinar-systemes-agentiques/">
 
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/favicon.png">
 
-<!-- Open Graph / social -->
+<!-- Open Graph / Facebook / LinkedIn -->
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Galadrim">
+<meta property="og:url" content="https://sylvain-beep.github.io/webinar-systemes-agentiques/">
 <meta property="og:title" content="Livre blanc · Systèmes agentiques : du premier diagnostic au ROI">
 <meta property="og:description" content="Comprendre, identifier et rentabiliser votre premier agent IA. Cas réels chiffrés et feuille de route concrète. Pour les PME et ETI de Suisse romande.">
 <meta property="og:locale" content="fr_CH">
+<meta property="og:image" content="https://sylvain-beep.github.io/webinar-systemes-agentiques/assets/og-image.png">
+<meta property="og:image:secure_url" content="https://sylvain-beep.github.io/webinar-systemes-agentiques/assets/og-image.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Livre blanc Galadrim — Systèmes agentiques : du premier diagnostic au retour sur investissement">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Livre blanc · Systèmes agentiques : du premier diagnostic au ROI">
+<meta name="twitter:description" content="Comprendre, identifier et rentabiliser votre premier agent IA. Cas réels chiffrés et feuille de route concrète. Pour les PME et ETI de Suisse romande.">
+<meta name="twitter:image" content="https://sylvain-beep.github.io/webinar-systemes-agentiques/assets/og-image.png">
+<meta name="twitter:image:alt" content="Livre blanc Galadrim — Systèmes agentiques">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -514,12 +532,17 @@
 (function(){
   "use strict";
   const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const PDF_URL = 'assets/livre-blanc-galadrim-systemes-agentiques.pdf';
+  // Endpoint Google Apps Script (déployé sur le compte sylvain@galadrim.ch).
+  // → Colle ici l'URL "/exec" de ton déploiement "Application Web" (voir apps-script/README.md).
+  const ENDPOINT = 'https://script.google.com/macros/s/AKfycby1OsvOGMLxqJnG6wDbG6HYcR8_5kEwwDBp7QG-n-0QcUKQgJORkuh0TAcDzYFGIl-Zrw/exec';
+  const CALENDLY = 'https://calendly.com/sylvain-galadrim/30min';
+  const esc = s => String(s).replace(/[<>&"']/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'}[c]));
 
-  // ---------- forms (mocked submit → gated download) ----------
+  // ---------- forms (submit → Apps Script → envoi du PDF par email) ----------
   document.querySelectorAll('form[data-signup]').forEach(form => {
     const prenom = form.querySelector('input[name="prenom"]');
     const email = form.querySelector('input[name="email"]');
+    const entreprise = form.querySelector('input[name="entreprise"]');
     const btn = form.querySelector('button.btn-primary');
 
     const setErr = (input, msg) => {
@@ -537,7 +560,22 @@
     clearLive(prenom, v => (v.trim().length < 2 ? 'Prénom requis' : ''));
     clearLive(email, v => (!emailRe.test(v) ? 'Email invalide' : ''));
 
-    form.addEventListener('submit', (ev) => {
+    const showSuccess = (name) => {
+      const tick = '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>';
+      form.innerHTML = `
+        <div class="success">
+          <div class="tick">${tick}</div>
+          <h4>Merci ${name}, votre livre blanc arrive par email</h4>
+          <p>Nous venons de vous l'envoyer en pièce jointe. Vérifiez votre boîte de réception (et les indésirables si besoin).</p>
+          <div class="next">Pour aller plus loin, prenez rendez-vous avec moi pour un diagnostic Data et IA de 30 minutes, sans engagement : <a href="${CALENDLY}" target="_blank" rel="noopener" style="color:var(--gala-bleu)">réserver un créneau</a></div>
+        </div>`;
+      if (window.Motion && !reducedMotion) {
+        Motion.animate(form.querySelector('.success'), { opacity: [0, 1], y: [10, 0] }, { duration: .45, ease: EASE });
+        Motion.animate(form.querySelector('.tick'), { scale: [.4, 1.1, 1] }, { duration: .5, ease: 'easeOut' });
+      }
+    };
+
+    form.addEventListener('submit', async (ev) => {
       ev.preventDefault();
       const pErr = prenom.value.trim().length < 2 ? 'Prénom requis' : '';
       const eErr = !emailRe.test(email.value) ? 'Email invalide' : '';
@@ -545,30 +583,28 @@
       setErr(email, eErr);
       if (pErr || eErr) return;
 
+      const label = btn.querySelector('.btn-label');
+      const prevLabel = label.textContent;
       btn.disabled = true;
-      btn.querySelector('.btn-label').textContent = 'Envoi…';
+      label.textContent = 'Envoi…';
 
-      // NOTE: submission is mocked. Wire a real endpoint (CRM/HubSpot) here,
-      // then trigger the download/success on its response.
-      setTimeout(() => {
-        const name = prenom.value.trim().replace(/[<>&"']/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'}[c]));
-        const tick = '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>';
-        const dl = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>';
-        form.innerHTML = `
-          <div class="success">
-            <div class="tick">${tick}</div>
-            <h4>Merci ${name}, votre livre blanc est prêt</h4>
-            <p>Le document s'ouvre automatiquement. Si l'ouverture ne se lance pas, utilisez le bouton ci-dessous.</p>
-            <a class="dl" href="${PDF_URL}" download>${dl} Télécharger le PDF</a>
-            <div class="next">Pour aller plus loin, nous vous proposons un diagnostic Data et IA de 30 minutes, sans engagement. Écrivez-nous à <a href="mailto:sylvain@galadrim.ch" style="color:var(--gala-bleu)">sylvain@galadrim.ch</a></div>
-          </div>`;
-        // auto-open the PDF
-        window.open(PDF_URL, '_blank', 'noopener');
-        if (window.Motion && !reducedMotion) {
-          Motion.animate(form.querySelector('.success'), { opacity: [0, 1], y: [10, 0] }, { duration: .45, ease: EASE });
-          Motion.animate(form.querySelector('.tick'), { scale: [.4, 1.1, 1] }, { duration: .5, ease: 'easeOut' });
-        }
-      }, 800);
+      // Requête "simple" (form-encoded) → pas de pré-vol CORS vers Apps Script.
+      const body = new URLSearchParams({
+        prenom: prenom.value.trim(),
+        email: email.value.trim(),
+        entreprise: entreprise ? entreprise.value.trim() : ''
+      });
+
+      try {
+        const res = await fetch(ENDPOINT, { method: 'POST', body });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.ok) throw new Error(data.error || 'send_failed');
+        showSuccess(esc(prenom.value.trim()));
+      } catch (err) {
+        setErr(email, 'Envoi impossible. Réessayez, ou écrivez à sylvain@galadrim.ch');
+        btn.disabled = false;
+        label.textContent = prevLabel;
+      }
     });
   });
 
