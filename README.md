@@ -1,4 +1,4 @@
-# Livre blanc Galadrim — Systèmes agentiques (landing page)
+# Livre blanc Galadrim: Systèmes agentiques (landing page)
 
 Landing page de téléchargement du livre blanc « Systèmes agentiques : du premier
 diagnostic au retour sur investissement », destinée à une campagne publicitaire.
@@ -7,12 +7,12 @@ diagnostic au retour sur investissement », destinée à une campagne publicitai
 
 Site statique, sans build :
 
-- `index.html` — la page complète (HTML / CSS / JS en ligne)
+- `index.html` : la page complète (HTML / CSS / JS en ligne)
 - `assets/`
-  - `colors_and_type.css` — design tokens Galadrim (couleurs, typographie)
-  - `galadrim-logo.svg` — logo, recoloré à l'exécution
-  - `framer-motion-dom.js` — moteur d'animation (entrées, reveals au scroll)
-  - `livre-blanc-galadrim-systemes-agentiques.pdf` — le livre blanc téléchargé
+  - `colors_and_type.css` : design tokens Galadrim (couleurs, typographie)
+  - `galadrim-logo.svg` : logo, recoloré à l'exécution
+  - `framer-motion-dom.js` : moteur d'animation (entrées, reveals au scroll)
+  - `livre-blanc-galadrim-systemes-agentiques.pdf` : le livre blanc téléchargé
 
 ## Aperçu local
 

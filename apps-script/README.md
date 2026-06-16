@@ -1,4 +1,4 @@
-# Backend formulaire — Google Apps Script
+# Backend formulaire: Google Apps Script
 
 Le formulaire de la landing envoie le livre blanc **par email depuis ton Gmail**
 (`sylvain@galadrim.ch`), enregistre chaque lead dans un **Google Sheet**, et te
@@ -6,7 +6,7 @@ notifie. Aucun service tiers, aucun lien de téléchargement exposé sur la page
 
 ## 1. (Optionnel mais recommandé) Créer le Google Sheet des leads
 
-1. Crée un Google Sheet vide (ex. « Leads — Livre blanc »).
+1. Crée un Google Sheet vide (ex. « Leads : Livre blanc »).
 2. Dans son URL `https://docs.google.com/spreadsheets/d/XXXXXXXX/edit`,
    copie la partie `XXXXXXXX` : c'est le **SHEET_ID**.
 3. Dans `Code.gs`, renseigne `const SHEET_ID = 'XXXXXXXX';`.

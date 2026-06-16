@@ -1,5 +1,5 @@
 /**
- * Galadrim — Livre blanc « Systèmes agentiques »
+ * Galadrim · Livre blanc « Systèmes agentiques »
  * Backend du formulaire de la landing page.
  *
  * À chaque soumission :
@@ -41,7 +41,7 @@ function doPost(e) {
     const pdf = UrlFetchApp.fetch(PDF_URL).getBlob().setName(PDF_NAME);
 
     // 2) Email au lead
-    GmailApp.sendEmail(email, 'Votre livre blanc — Systèmes agentiques', plainBody(prenom), {
+    GmailApp.sendEmail(email, 'Votre livre blanc : Systèmes agentiques', plainBody(prenom), {
       name: FROM_NAME,
       htmlBody: htmlBody(prenom),
       attachments: [pdf],
@@ -53,7 +53,7 @@ function doPost(e) {
 
     // 4) Notification interne
     GmailApp.sendEmail(NOTIFY_TO, 'Nouveau lead livre blanc : ' + prenom,
-      'Prénom : ' + prenom + '\nEmail : ' + email + '\nEntreprise : ' + (entreprise || '—'));
+      'Prénom : ' + prenom + '\nEmail : ' + email + '\nEntreprise : ' + (entreprise || 'non renseignée'));
 
     return json({ ok: true });
   } catch (err) {
@@ -88,7 +88,7 @@ function plainBody(prenom) {
     '« Systèmes agentiques : du premier diagnostic au retour sur investissement ».\n\n' +
     'Pour en discuter et identifier votre premier agent rentable, réservez 30 minutes avec moi, ' +
     'sans engagement : ' + CALENDLY + '\n\n' +
-    'Bien à vous,\nSylvain de Muynck — Galadrim';
+    'Bien à vous,\nSylvain de Muynck, Galadrim';
 }
 
 function htmlBody(prenom) {
@@ -99,7 +99,7 @@ function htmlBody(prenom) {
         '<b>« Systèmes agentiques : du premier diagnostic au retour sur investissement »</b>.</p>' +
       '<p>Pour en discuter et identifier votre premier agent rentable, réservez 30 minutes avec moi, sans engagement :</p>' +
       '<p><a href="' + CALENDLY + '" style="display:inline-block;background:#FF2362;color:#fff;text-decoration:none;padding:12px 22px;border-radius:8px;font-weight:600">Réserver un créneau</a></p>' +
-      '<p style="margin-top:24px">Bien à vous,<br><b>Sylvain de Muynck</b><br>Galadrim — Studio de développement digital et IA</p>' +
+      '<p style="margin-top:24px">Bien à vous,<br><b>Sylvain de Muynck</b><br>Galadrim, Studio de développement digital et IA</p>' +
     '</div>';
 }
 
